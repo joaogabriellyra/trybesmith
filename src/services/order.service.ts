@@ -13,6 +13,11 @@ class OrderService {
     const orders = await this.model.getAll();
     return orders;
   }
+
+  public async create(productsIds: number[], userId: number) {
+    const orderId = await this.model.create(userId);
+    await Promise.all(productsIds.map((id) => this.model.update(id, orderId)));
+  }
 }
 
 export default OrderService;
